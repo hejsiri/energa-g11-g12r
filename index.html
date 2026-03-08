@@ -117,6 +117,8 @@ table.cheaper th{background-color:var(--green-light)}
 table.expensive th{background-color:#c62828}
 table.cheaper .total-row{background-color:var(--green-light)!important}
 table.expensive .total-row{background-color:#c62828!important}
+.tariff-title-main{display:block;font-size:16px;font-weight:800}
+.tariff-title-sub{display:block;font-size:13px;font-weight:600;opacity:.95;margin-top:2px}
 
 .counter{margin-top:20px;text-align:center;font-size:12px;color:#777}
 
@@ -208,7 +210,7 @@ table.expensive .total-row{background-color:#c62828!important}
     <div class="table-wrap">
       <table id="g12rTable">
         <thead>
-          <tr><th colspan="4" id="g12rTitle">Taryfa G12r</th></tr>
+          <tr><th colspan="4" id="g12rTitle"><span class="tariff-title-main">Taryfa G12r</span><span class="tariff-title-sub">Średnia cena: -</span></th></tr>
           <tr><th>Rodzaj opłaty</th><th>Cena</th><th>Ilość</th><th>Wartość</th></tr>
         </thead>
         <tbody></tbody>
@@ -221,7 +223,7 @@ table.expensive .total-row{background-color:#c62828!important}
     <div class="table-wrap">
       <table id="g11Table">
         <thead>
-          <tr><th colspan="4" id="g11Title">Taryfa G11</th></tr>
+          <tr><th colspan="4" id="g11Title"><span class="tariff-title-main">Taryfa G11</span><span class="tariff-title-sub">Średnia cena: -</span></th></tr>
           <tr><th>Rodzaj opłaty</th><th>Cena</th><th>Ilość</th><th>Wartość</th></tr>
         </thead>
         <tbody></tbody>
@@ -391,17 +393,17 @@ function compute(){
 
   g12rTable.classList.remove('cheaper','expensive');
   g11Table.classList.remove('cheaper','expensive');
-  g12rTitle.textContent = 'Taryfa G12r';
-  g11Title.textContent = 'Taryfa G11';
+  g12rTitle.innerHTML = `<span class="tariff-title-main">Taryfa G12r</span><span class="tariff-title-sub">Średnia cena: ${total > 0 ? money(avgG12r) + ' / kWh' : '-'}</span>`;
+  g11Title.innerHTML = `<span class="tariff-title-main">Taryfa G11</span><span class="tariff-title-sub">Średnia cena: ${total > 0 ? money(avgG11) + ' / kWh' : '-'}</span>`;
 
   if (sumG12r < sumG11){
     g12rTable.classList.add('cheaper');
     g11Table.classList.add('expensive');
-    g12rTitle.textContent = `Taryfa G12r (tańsza o ${diff.toFixed(2)} zł / mc)`;
+    g12rTitle.innerHTML = `<span class="tariff-title-main">Taryfa G12r (tańsza o ${diff.toFixed(2)} zł / mc)</span><span class="tariff-title-sub">Średnia cena: ${total > 0 ? money(avgG12r) + ' / kWh' : '-'}</span>`;
   } else if (sumG11 < sumG12r){
     g11Table.classList.add('cheaper');
     g12rTable.classList.add('expensive');
-    g11Title.textContent = `Taryfa G11 (tańsza o ${diff.toFixed(2)} zł / mc)`;
+    g11Title.innerHTML = `<span class="tariff-title-main">Taryfa G11 (tańsza o ${diff.toFixed(2)} zł / mc)</span><span class="tariff-title-sub">Średnia cena: ${total > 0 ? money(avgG11) + ' / kWh' : '-'}</span>`;
   } else {
     g12rTable.classList.add('cheaper');
     g11Table.classList.add('cheaper');
