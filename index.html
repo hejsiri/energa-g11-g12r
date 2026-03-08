@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8" />
+<title>Symulator: G12r vs G11</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<style>
+:root{
+  --green:#2e7d32;
+  --green-dark:#1b5e20;
+  --green-light:#388e3c;
+  --day:#f57c00;
+  --night:#1976d2;
+  --bg1:#e8f5e9;
+}
+*{box-sizing:border-box}
+body{
+  font-family:Segoe UI,Arial,sans-serif;
+  background:linear-gradient(135deg,var(--bg1),#fff);
+  margin:0;padding:20px;color:#333
+}
+h1{color:var(--green);margin:0}
+.container{max-width:1200px;margin:0 auto}
+
+.logo{display:flex;align-items:center;gap:15px;margin-bottom:15px}
+.logo img{height:100px}
+
+label{display:block;font-weight:700;margin-top:16px;font-size:18px}
+
+.inputs{display:grid;grid-template-columns:1fr 140px;gap:10px;align-items:center}
+
+input[type=range]{
+  width:100%;
+  appearance:none;
+  height:14px;
+  border-radius:7px;
+  background:#c8e6c9;
+  outline:none;
+}
+#total{
+  background:linear-gradient(to right,var(--green-dark) 0%,var(--green-dark) var(--fill,40%),#c8e6c9 var(--fill,40%),#c8e6c9 100%);
+}
+#cheapPercent{
+  background:linear-gradient(to right,var(--night) 0%,var(--day) 100%);
+}
+input[type=range]::-webkit-slider-thumb{
+  appearance:none;
+  width:20px;height:20px;border-radius:50%;
+  background:var(--green);
+  border:2px solid #fff;
+  box-shadow:0 0 6px rgba(0,0,0,.3)
+}
+
+.input-with-unit{display:flex;align-items:center}
+.input-with-unit input[type=number]{
+  height:46px;font-size:18px;padding:0 10px;border:1px solid #dcdcdc;
+  border-radius:8px 0 0 8px;text-align:right;width:100%;
+}
+.unit-label{
+  background:#f5f5f5;border:1px solid #dcdcdc;border-left:none;border-radius:0 8px 8px 0;
+  padding:0 10px;height:46px;display:flex;align-items:center;font-weight:700;color:#555;font-size:16px;
+}
+
+.btn-stats{display:flex;gap:10px;margin-top:10px}
+.btn-stats button{flex:1;padding:14px;border:none;border-radius:12px;color:#fff;font-weight:700;font-size:16px}
+.btn-cheap{background:var(--night)}
+.btn-expensive{background:var(--day)}
+
+.tables{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:20px}
+@media(max-width:900px){.tables{grid-template-columns:1fr}}
+table{
+  width:100%;
+  border-collapse:collapse;
+  border-radius:12px;
+  overflow:hidden;
+  font-size:15px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.08);
+  background:#fff;
+}
+th,td{padding:10px 12px;border-bottom:1px solid #e0e0e0}
+td:first-child,th:first-child{text-align:left}
+td{text-align:right}
+tr:nth-child(even){background-color:#fafafa}
+#g12rTable th,#g11Table th{background-color:var(--green-light);color:#fff;font-weight:700}
+.total-row{font-weight:800;background-color:var(--green-light)!important;color:#fff!important}
+
+.winner{margin-top:16px;padding:14px;border-radius:10px;color:#fff;text-align:center;font-weight:800;font-size:16px}
+.winner.g11{background:black}
+.winner.g12r{background:red}
+
+.counter{margin-top:20px;text-align:center;font-size:12px;color:#777}
+
+@media (max-width:600px){
+  .logo{flex-direction:column;align-items:center;text-align:center}
+  .logo img{height:80px}
+  .logo h1{font-size:20px;margin-top:8px}
+  table{font-size:14px}
+  table th:nth-child(1),table td:nth-child(1){width:38%}
+  table th:nth-child(2),table td:nth-child(2){width:25%}
+  table th:nth-child(3),table td:nth-child(3){width:18%}
+  table th:nth-child(4),table td:nth-child(4){width:19%}
+}
+@media (max-width:400px){
+  .tables{overflow-x:auto}
+  table{min-width:520px}
+}
+.note{
+  margin-top:10px;
+  font-size:13px;
+  color:#555;
+  background:#ffffffcc;
+  border:1px solid #e6e6e6;
+  border-radius:10px;
+  padding:10px 12px;
+}
+.note b{color:#222}
+.smallwarn{margin-top:6px;font-size:12px;color:#666}
+</style>
+</head>
+
+<body>
+<div class="container">
+  <div class="logo">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/1/1c/Logo_energa.png" alt="Energa Operator">
+    <div>
+      <h1>Symulator: G12r vs G11</h1>
+      <div class="note">
+        <b>G12r tanio:</b> 22:00–7:00 oraz 13:00–16:00 (codziennie)<br>
+        Suwak poniżej oznacza: <b>% zużycia</b> przypadający na te tanie godziny.
+      </div>
+    </div>
+  </div>
+
+  <label>Zużycie miesięczne (kWh)</label>
+  <div class="inputs">
+    <input type="range" id="total" min="0" max="2000" value="400" oninput="syncFromSlider('total')">
+    <div class="input-with-unit">
+      <input type="number" id="totalInput" min="0" max="2000" value="400" oninput="syncFromInput('total')">
+      <span class="unit-label">kWh</span>
+    </div>
+  </div>
+
+  <label>Udział zużycia w tanich godzinach G12r (%)</label>
+  <div class="inputs">
+    <input type="range" id="cheapPercent" min="0" max="100" value="50" oninput="syncFromSlider('cheapPercent')">
+    <div class="input-with-unit">
+      <input type="number" id="cheapPercentInput" min="0" max="100" value="50" oninput="syncFromInput('cheapPercent')">
+      <span class="unit-label">%</span>
+    </div>
+  </div>
+
+  <div class="btn-stats">
+    <button class="btn-cheap" id="cheapBtn">🟦 Tanie godziny G12r: 50% (200 kWh)</button>
+    <button class="btn-expensive" id="expensiveBtn">🟧 Drogie godziny G12r: 50% (200 kWh)</button>
+  </div>
+
+  <div class="tables">
+    <table id="g12rTable">
+      <thead>
+        <tr><th colspan="4">Taryfa G12r</th></tr>
+        <tr><th>Rodzaj opłaty</th><th>Cena</th><th>Ilość</th><th>Wartość</th></tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <table id="g11Table">
+      <thead>
+        <tr><th colspan="4">Taryfa G11</th></tr>
+        <tr><th>Rodzaj opłaty</th><th>Cena</th><th>Ilość</th><th>Wartość</th></tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <div class="winner" id="winnerBox"></div>
+
+  <div class="counter">
+    Liczba odwiedzin: <span id="visitCount">...</span>
+  </div>
+</div>
+
+<script>
+/* =========================================================
+   POMOCNICZE
+   ========================================================= */
+const money = v => v.toFixed(2) + ' zł';
+const kwhVal = v => Math.round(v) + ' kWh';
+const clamp = (v,min,max)=>Math.max(min,Math.min(max,v));
+
+function updateSliderFill(id){
+  const slider = document.getElementById(id);
+  const value = (slider.value - slider.min) / (slider.max - slider.min) * 100;
+  slider.style.setProperty('--fill', value + '%');
+}
+function syncFromSlider(id){
+  document.getElementById(id+'Input').value = document.getElementById(id).value;
+  updateSliderFill(id);
+  compute();
+}
+function syncFromInput(id){
+  let v = parseFloat(document.getElementById(id+'Input').value)||0;
+  v = (id==='cheapPercent') ? clamp(v,0,100) : clamp(v,0,2000);
+  document.getElementById(id+'Input').value = v;
+  document.getElementById(id).value = v;
+  updateSliderFill(id);
+  compute();
+}
+function renderTable(id, rows){
+  const tbody = document.querySelector('#'+id+' tbody');
+  tbody.innerHTML = '';
+  rows.forEach(([n,rate,qty,val])=>{
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td>${n}</td><td>${money(rate)}</td><td>${qty}</td><td>${money(val)}</td>`;
+    tbody.appendChild(tr);
+  });
+  const total = rows.reduce((s,r)=>s+r[3],0);
+  const tr = document.createElement('tr');
+  tr.className='total-row';
+  tr.innerHTML = `<td colspan="3">Suma</td><td>${money(total)}</td>`;
+  tbody.appendChild(tr);
+  return total;
+}
+
+/* =========================================================
+   STAWKI WG FAKTUR (Twoje screeny) – wszystko w BRUTTO
+   ========================================================= */
+
+/* VAT i akcyza użyte do wyliczeń brutto energii (jak na Twojej fakturze G12r) */
+const VAT = 0.23;
+const AKCYZA_KWH = 0.0050; // 5,00 zł/MWh = 0,0050 zł/kWh
+
+/* ---------- G12r (wg faktury) ---------- */
+/* Energia czynna – z faktury (netto): szczyt 0,5050; pozaszczyt 0,3539.
+   Brutto liczymy: (netto + akcyza) * (1+VAT) */
+const G12R_ENERGIA_DZIEN = (0.5050 + AKCYZA_KWH) * (1 + VAT); // = 0.6273
+const G12R_ENERGIA_NOC   = (0.3539 + AKCYZA_KWH) * (1 + VAT); // = 0.4414
+
+/* Dystrybucja – z faktury (netto) * 1.23 => brutto */
+const G12R_ABO        = 0.7400 * (1 + VAT);  // 0.9102
+const G12R_STALA      = 19.7700 * (1 + VAT); // 24.3171
+const G12R_PRZEJ      = 0.3300 * (1 + VAT);  // 0.4059
+const G12R_MOC        = 16.0100 * (1 + VAT); // 19.6923
+const G12R_SIEC_DROGA = 0.3590 * (1 + VAT);  // 0.4416
+const G12R_SIEC_TANIA = 0.0870 * (1 + VAT);  // 0.1070
+const G12R_JAK        = 0.0321 * (1 + VAT);  // 0.0395
+const G12R_OZE        = 0.0035 * (1 + VAT);  // 0.0043
+const G12R_KOG        = 0.0030 * (1 + VAT);  // 0.0037
+
+/* ---------- G11 (wg faktury) ---------- */
+/* Energia czynna całodobowa – z faktury (netto 0,5050).
+   Akcyza na screenie G11 nie jest pokazana osobno, ale w praktyce w rozliczeniach zwykle występuje.
+   Żeby porównanie było spójne z G12r: doliczamy akcyzę tak samo. */
+const G11_ENERGIA_CALODOBOWA = (0.5050 + AKCYZA_KWH) * (1 + VAT); // = 0.6273
+
+/* Dystrybucja – z faktury:
+   - opłata abonamentowa: 2,2800 netto (pierwszy okres) oraz 0,7000 netto (drugi okres)
+   Tu ustawiamy domyślnie 0,7000 netto -> 0,8610 brutto (jak drugi okres). */
+const G11_ABO   = 0.7000 * (1 + VAT);   // 0.8610  <-- jeśli chcesz 2,2800 netto: wpisz 2.2800*(1+VAT)
+const G11_STALA = 7.6800 * (1 + VAT);   // 9.4464
+const G11_PRZEJ = 0.3300 * (1 + VAT);   // 0.4059
+const G11_MOC   = 16.0100 * (1 + VAT);  // 19.6923
+const G11_ZMIENNA = 0.3437 * (1 + VAT); // 0.4228
+const G11_JAK   = 0.0321 * (1 + VAT);   // 0.0395
+const G11_OZE   = 0.0035 * (1 + VAT);   // 0.0043
+const G11_KOG   = 0.0030 * (1 + VAT);   // 0.0037
+
+/* =========================================================
+   OBLICZENIA
+   ========================================================= */
+function compute(){
+  const total = parseFloat(document.getElementById('total').value);
+  const cheapPct = parseFloat(document.getElementById('cheapPercent').value);
+  const expensivePct = 100 - cheapPct;
+
+  const kWhCheap = total * (cheapPct/100);
+  const kWhExpensive = total - kWhCheap;
+
+  document.getElementById('cheapBtn').textContent =
+    `🟦 Tanie godziny G12r: ${cheapPct}% (${Math.round(kWhCheap)} kWh)`;
+  document.getElementById('expensiveBtn').textContent =
+    `🟧 Drogie godziny G12r: ${expensivePct}% (${Math.round(kWhExpensive)} kWh)`;
+
+  /* G12r */
+  const g12rRows = [
+    ['Opłata abonamentowa', G12R_ABO, '1 mc', G12R_ABO],
+    ['Opłata sieciowa stała', G12R_STALA, '1 mc', G12R_STALA],
+    ['Opłata przejściowa', G12R_PRZEJ, '1 mc', G12R_PRZEJ],
+    ['Opłata mocowa', G12R_MOC, '1 mc', G12R_MOC],
+
+    ['Energia czynna – strefa dzienna (szczyt)', G12R_ENERGIA_DZIEN, kwhVal(kWhExpensive), G12R_ENERGIA_DZIEN * kWhExpensive],
+    ['Energia czynna – strefa nocna (pozaszczyt)', G12R_ENERGIA_NOC, kwhVal(kWhCheap), G12R_ENERGIA_NOC * kWhCheap],
+
+    ['Dystrybucja zmienna – szczytowa', G12R_SIEC_DROGA, kwhVal(kWhExpensive), G12R_SIEC_DROGA * kWhExpensive],
+    ['Dystrybucja zmienna – pozaszczytowa', G12R_SIEC_TANIA, kwhVal(kWhCheap), G12R_SIEC_TANIA * kWhCheap],
+
+    ['Opłata jakościowa', G12R_JAK, kwhVal(total), G12R_JAK * total],
+    ['Opłata OZE', G12R_OZE, kwhVal(total), G12R_OZE * total],
+    ['Opłata kogeneracyjna', G12R_KOG, kwhVal(total), G12R_KOG * total],
+  ];
+  const sumG12r = renderTable('g12rTable', g12rRows);
+
+  /* G11 */
+  const g11Rows = [
+    ['Opłata abonamentowa', G11_ABO, '1 mc', G11_ABO],
+    ['Opłata sieciowa stała', G11_STALA, '1 mc', G11_STALA],
+    ['Opłata przejściowa', G11_PRZEJ, '1 mc', G11_PRZEJ],
+    ['Opłata mocowa', G11_MOC, '1 mc', G11_MOC],
+
+    ['Energia czynna – całodobowa', G11_ENERGIA_CALODOBOWA, kwhVal(total), G11_ENERGIA_CALODOBOWA * total],
+    ['Dystrybucja zmienna – całodobowa', G11_ZMIENNA, kwhVal(total), G11_ZMIENNA * total],
+
+    ['Opłata jakościowa', G11_JAK, kwhVal(total), G11_JAK * total],
+    ['Opłata OZE', G11_OZE, kwhVal(total), G11_OZE * total],
+    ['Opłata kogeneracyjna', G11_KOG, kwhVal(total), G11_KOG * total],
+  ];
+  const sumG11 = renderTable('g11Table', g11Rows);
+
+  const box = document.getElementById('winnerBox');
+  if (sumG12r < sumG11){
+    box.textContent = 'G12r tańsza o ' + (sumG11 - sumG12r).toFixed(2) + ' zł / mc';
+    box.className = 'winner g12r';
+  } else if (sumG11 < sumG12r){
+    box.textContent = 'G11 tańsza o ' + (sumG12r - sumG11).toFixed(2) + ' zł / mc';
+    box.className = 'winner g11';
+  } else {
+    box.textContent = 'Koszty identyczne';
+    box.className = 'winner';
+  }
+}
+
+/* =========================================================
+   LICZNIK (zostawiam jak było)
+   ========================================================= */
+async function refreshVisitCounter(){
+  try{
+    const res = await fetch('licznik.php?ts=' + Date.now(), { cache: 'no-store' });
+    const txt = (await res.text()).trim();
+    document.getElementById('visitCount').textContent = txt;
+  }catch(e){
+    document.getElementById('visitCount').textContent = 'błąd';
+  }
+}
+
+updateSliderFill('total');
+updateSliderFill('cheapPercent');
+compute();
+refreshVisitCounter();
+</script>
+</body>
+</html>
