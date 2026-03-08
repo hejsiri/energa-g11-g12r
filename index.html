@@ -109,8 +109,16 @@ table.cheaper th{background-color:var(--green-light)}
 table.expensive th{background-color:#c62828}
 table.cheaper .total-row{background-color:var(--green-light)!important}
 table.expensive .total-row{background-color:#c62828!important}
-.tariff-title-main{display:block;font-size:16px;font-weight:800}
-.tariff-title-sub{display:block;font-size:13px;font-weight:600;opacity:.95;margin-top:2px}
+.tariff-title-main{display:block;font-size:20px;font-weight:800}
+.tariff-title-sub{display:block;font-size:16px;font-weight:600;opacity:.95;margin-top:2px}
+.warn-icon{
+  display:inline-flex;
+  width:22px;
+  height:22px;
+  margin:0 4px;
+  vertical-align:-2px;
+}
+.warn-icon svg{display:block;width:100%;height:100%}
 
 .counter{margin-top:20px;text-align:center;font-size:12px;color:#777}
 
@@ -372,6 +380,7 @@ function compute(){
   const g12rTitle = document.getElementById('g12rTitle');
   const g11Title = document.getElementById('g11Title');
   const diff = Math.abs(sumG12r - sumG11);
+  const warnIcon = `<span class="warn-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path fill="#fff" d="M12 2.2L22 20H2L12 2.2z"/><rect x="11" y="8" width="2" height="7" fill="#263238"/><circle cx="12" cy="17.5" r="1.3" fill="#263238"/></svg></span>`;
 
   g12rTable.classList.remove('cheaper','expensive');
   g11Table.classList.remove('cheaper','expensive');
@@ -381,11 +390,11 @@ function compute(){
   if (sumG12r < sumG11){
     g12rTable.classList.add('cheaper');
     g11Table.classList.add('expensive');
-    g12rTitle.innerHTML = `<span class="tariff-title-main">Taryfa G12r (tańsza o ${diff.toFixed(2)} zł / mc)</span><span class="tariff-title-sub">Średnia cena: ${total > 0 ? money(avgG12r) + ' / kWh' : '-'}</span>`;
+    g12rTitle.innerHTML = `<span class="tariff-title-main">Taryfa G12r ${warnIcon} tańsza o ${diff.toFixed(2)} zł</span><span class="tariff-title-sub">Średnia cena: ${total > 0 ? money(avgG12r) + ' / kWh' : '-'}</span>`;
   } else if (sumG11 < sumG12r){
     g11Table.classList.add('cheaper');
     g12rTable.classList.add('expensive');
-    g11Title.innerHTML = `<span class="tariff-title-main">Taryfa G11 (tańsza o ${diff.toFixed(2)} zł / mc)</span><span class="tariff-title-sub">Średnia cena: ${total > 0 ? money(avgG11) + ' / kWh' : '-'}</span>`;
+    g11Title.innerHTML = `<span class="tariff-title-main">Taryfa G11 ${warnIcon} tańsza o ${diff.toFixed(2)} zł</span><span class="tariff-title-sub">Średnia cena: ${total > 0 ? money(avgG11) + ' / kWh' : '-'}</span>`;
   } else {
     g12rTable.classList.add('cheaper');
     g11Table.classList.add('cheaper');
