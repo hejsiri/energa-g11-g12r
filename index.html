@@ -214,7 +214,7 @@ tr:nth-child(even){background-color:#fafafa}
         <tbody></tbody>
       </table>
       <div class="table-stats" id="g12rStats">
-        <b>Statystyki G12r:</b> Średnia cena: -
+        <b>Średnia cena:</b> -
       </div>
     </div>
 
@@ -227,7 +227,7 @@ tr:nth-child(even){background-color:#fafafa}
         <tbody></tbody>
       </table>
       <div class="table-stats" id="g11Stats">
-        <b>Statystyki G11:</b> Średnia cena: -
+        <b>Średnia cena:</b> -
       </div>
     </div>
   </div>
@@ -382,9 +382,9 @@ function compute(){
   const avgG12r = total > 0 ? sumG12r / total : 0;
   const avgG11 = total > 0 ? sumG11 / total : 0;
   document.getElementById('g12rStats').innerHTML =
-    `<b>Statystyki G12r:</b> Suma: ${money(sumG12r)} | Zużycie: ${kwhVal(total)} | Średnia cena: ${total > 0 ? money(avgG12r) + ' / kWh' : '-'}`;
+    `<b>Średnia cena:</b> ${total > 0 ? money(avgG12r) + ' / kWh' : '-'}`;
   document.getElementById('g11Stats').innerHTML =
-    `<b>Statystyki G11:</b> Suma: ${money(sumG11)} | Zużycie: ${kwhVal(total)} | Średnia cena: ${total > 0 ? money(avgG11) + ' / kWh' : '-'}`;
+    `<b>Średnia cena:</b> ${total > 0 ? money(avgG11) + ' / kWh' : '-'}`;
 
   const box = document.getElementById('winnerBox');
   if (sumG12r < sumG11){
