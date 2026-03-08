@@ -230,21 +230,21 @@ function renderTable(id, rows){
 const VAT = 0.23;
 const AKCYZA_KWH = 0.0050; // 5,00 zł/MWh = 0,0050 zł/kWh
 
-/* ---------- G12r (wg faktury) ---------- */
-/* Energia czynna – z faktury (netto): szczyt 0,5050; pozaszczyt 0,3539.
+/* ---------- G12r (wg faktury 01.02.2026-28.02.2026) ---------- */
+/* Energia czynna – z faktury (netto): szczyt 0,6717; pozaszczyt 0,3067.
    Brutto liczymy: (netto + akcyza) * (1+VAT) */
-const G12R_ENERGIA_DZIEN = (0.5050 + AKCYZA_KWH) * (1 + VAT); // = 0.6273
-const G12R_ENERGIA_NOC   = (0.3539 + AKCYZA_KWH) * (1 + VAT); // = 0.4414
+const G12R_ENERGIA_DZIEN = (0.6717 + AKCYZA_KWH) * (1 + VAT); // = 0.8323
+const G12R_ENERGIA_NOC   = (0.3067 + AKCYZA_KWH) * (1 + VAT); // = 0.3834
 
 /* Dystrybucja – z faktury (netto) * 1.23 => brutto */
 const G12R_ABO        = 0.7400 * (1 + VAT);  // 0.9102
-const G12R_STALA      = 19.7700 * (1 + VAT); // 24.3171
+const G12R_STALA      = 20.1700 * (1 + VAT); // 24.8091
 const G12R_PRZEJ      = 0.3300 * (1 + VAT);  // 0.4059
-const G12R_MOC        = 16.0100 * (1 + VAT); // 19.6923
-const G12R_SIEC_DROGA = 0.3590 * (1 + VAT);  // 0.4416
-const G12R_SIEC_TANIA = 0.0870 * (1 + VAT);  // 0.1070
-const G12R_JAK        = 0.0321 * (1 + VAT);  // 0.0395
-const G12R_OZE        = 0.0035 * (1 + VAT);  // 0.0043
+const G12R_MOC        = 17.1800 * (1 + VAT); // 21.1314
+const G12R_SIEC_DROGA = 0.3640 * (1 + VAT);  // 0.4477
+const G12R_SIEC_TANIA = 0.0882 * (1 + VAT);  // 0.1085
+const G12R_JAK        = 0.0332 * (1 + VAT);  // 0.0408
+const G12R_OZE        = 0.0073 * (1 + VAT);  // 0.0090
 const G12R_KOG        = 0.0030 * (1 + VAT);  // 0.0037
 
 /* ---------- G11 (wg faktury) ---------- */
