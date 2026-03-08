@@ -1,17 +1,25 @@
 # Symulator taryf energii: G12r vs G11
 
-Prosta aplikacja webowa do porównania szacunkowego miesięcznych kosztów energii dla taryf **G12r** i **G11**.
+Prosta aplikacja webowa do porównania szacunkowego miesięcznych kosztów energii (brutto) dla taryf **G12r** i **G11** na podstawie stawek wpisanych w kodzie.
 
 ![Zrzut ekranu aplikacji](screen.png)
 
 ## Co robi projekt
 
-- porównuje koszt miesięczny dla G12r i G11,
-- pozwala wpisać miesięczne zużycie energii osobno dla strefy dziennej i nocnej (kWh),
-- pokazuje procentowy udział stref dzień/noc na pasku gradientowym,
-- pokazuje rozbicie opłat w tabelach dla obu taryf,
-- pokazuje, która taryfa jest tańsza i o ile,
+- liczy miesięczny koszt dla G12r i G11 na podstawie zużycia w strefie dziennej i nocnej,
+- pokazuje udział procentowy dzień/noc na pasku oraz aktualizuje wynik na żywo,
+- rozbija wszystkie pozycje kosztowe w dwóch tabelach (energia, dystrybucja, opłaty dodatkowe),
+- wylicza średnią cenę za 1 kWh dla każdej taryfy,
+- oznacza tańszą taryfę i pokazuje różnicę kwotową,
+- zapamiętuje ostatnio wpisane zużycie w `localStorage`,
 - zlicza odwiedziny strony (`licznik.php` + `licznik.txt`).
+
+## Założenia stawek
+
+- stawki G12r i G11 są zapisane bezpośrednio w pliku `index.html`,
+- ceny energii i dystrybucji są przeliczane do brutto (VAT 23%),
+- akcyza jest liczona jako osobna pozycja,
+- obecna konfiguracja odpowiada danym z faktur z 2026 r. (zgodnie z komentarzami w kodzie).
 
 ## Struktura plików
 
@@ -43,4 +51,4 @@ Możesz otworzyć `index.html` bezpośrednio w przeglądarce, ale licznik odwied
 
 ## Uwagi
 
-Wyniki mają charakter orientacyjny i zależą od przyjętych stawek w kodzie (`index.html`).
+Wyniki mają charakter orientacyjny i zależą od przyjętych stawek oraz profilu zużycia. Przed użyciem do realnej decyzji warto zaktualizować stawki w `index.html` do bieżącej faktury/cennika.
