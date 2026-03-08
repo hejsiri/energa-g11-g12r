@@ -23,10 +23,56 @@ body{
 h1{color:var(--green);margin:0}
 .container{max-width:1200px;margin:0 auto}
 
-.logo{display:flex;align-items:center;gap:15px;margin-bottom:15px}
-.logo img{height:100px}
+.hero{
+  display:grid;
+  grid-template-columns:minmax(150px,200px) 1fr;
+  gap:14px;
+  align-items:center;
+  margin-bottom:12px;
+  padding:10px 12px;
+  border-radius:14px;
+  background:linear-gradient(130deg,rgba(255,255,255,.92),rgba(235,248,236,.95));
+  border:1px solid #dbe9dc;
+  box-shadow:0 6px 14px rgba(15,60,25,.07);
+}
+.hero-brand{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+.hero-brand img{
+  width:100%;
+  max-width:190px;
+  height:auto;
+  filter:drop-shadow(0 3px 8px rgba(0,0,0,.1));
+}
+.hero-content h1{
+  font-size:clamp(24px,2.6vw,36px);
+  letter-spacing:.2px;
+  line-height:1.08;
+}
+.hero-tag{
+  margin-top:8px;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:5px 10px;
+  border-radius:999px;
+  background:#e6f4e8;
+  color:var(--green-dark);
+  border:1px solid #c6dfc9;
+  font-weight:700;
+  font-size:12px;
+}
+.hero-tag-dot{
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:var(--green-light);
+  box-shadow:0 0 0 3px rgba(56,142,60,.15);
+}
 
-label{display:block;font-weight:700;margin-top:16px;font-size:18px}
+label{display:block;font-weight:700;margin-top:14px;font-size:18px}
 
 .inputs{
   display:grid;
@@ -137,9 +183,16 @@ table.expensive .total-row{background-color:#c62828!important}
 .counter{margin-top:20px;text-align:center;font-size:12px;color:#777}
 
 @media (max-width:600px){
-  .logo{flex-direction:column;align-items:center;text-align:center}
-  .logo img{height:80px}
-  .logo h1{font-size:20px;margin-top:8px}
+  .hero{
+    grid-template-columns:1fr;
+    text-align:center;
+    padding:10px;
+    gap:8px;
+  }
+  .hero-brand img{max-width:150px}
+  .hero-content h1{font-size:25px}
+  .hero-tag{justify-content:center}
+  .note{padding:8px 10px}
   .inputs{grid-template-columns:1fr}
   table{font-size:14px}
   table th:nth-child(1),table td:nth-child(1){width:38%}
@@ -152,13 +205,14 @@ table.expensive .total-row{background-color:#c62828!important}
   table{min-width:520px}
 }
 .note{
-  margin-top:10px;
-  font-size:13px;
-  color:#555;
-  background:#ffffffcc;
-  border:1px solid #e6e6e6;
+  margin-top:8px;
+  font-size:12px;
+  color:#334;
+  background:#ffffffde;
+  border:1px solid #d8e4d9;
   border-radius:10px;
-  padding:10px 12px;
+  padding:8px 10px;
+  box-shadow:0 3px 10px rgba(0,0,0,.04);
 }
 .note b{color:#222}
 .smallwarn{margin-top:6px;font-size:12px;color:#666}
@@ -167,10 +221,13 @@ table.expensive .total-row{background-color:#c62828!important}
 
 <body>
 <div class="container">
-  <div class="logo">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/1/1c/Logo_energa.png" alt="Energa Operator">
-    <div>
+  <div class="hero">
+    <div class="hero-brand">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/1/1c/Logo_energa.png" alt="Energa Operator">
+    </div>
+    <div class="hero-content">
       <h1>Symulator: G12r vs G11</h1>
+      <div class="hero-tag"><span class="hero-tag-dot" aria-hidden="true"></span>Porównanie kosztu miesięcznego</div>
       <div class="note">
         <b>G12r tanio:</b> 22:00–7:00 oraz 13:00–16:00 (codziennie)<br>
         Wpisz osobno zużycie dla <b>strefy dziennej</b> i <b>nocnej</b>.
