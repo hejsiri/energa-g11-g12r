@@ -75,8 +75,17 @@ label{display:block;font-weight:700;margin-top:14px;font-size:18px}
   gap:12px;
   align-items:end;
 }
-.input-group{display:flex;flex-direction:column;gap:6px}
-.input-group span{font-size:14px;font-weight:700}
+.input-group{
+  display:grid;
+  grid-template-columns:auto 1fr;
+  align-items:center;
+  gap:10px;
+}
+.input-group span{
+  font-size:22px;
+  font-weight:700;
+  white-space:nowrap;
+}
 .input-with-unit{display:flex;align-items:center}
 .input-with-unit input[type=number]{
   height:46px;font-size:18px;padding:0 10px;border:1px solid #dcdcdc;
@@ -188,6 +197,7 @@ table.expensive .total-row{background-color:#c62828!important}
   .hero-content h1{font-size:25px}
   .note{padding:8px 10px}
   .inputs{grid-template-columns:1fr}
+  .input-group{grid-template-columns:1fr;gap:6px}
   table{font-size:14px}
   table th:nth-child(1),table td:nth-child(1){width:38%}
   table th:nth-child(2),table td:nth-child(2){width:25%}
