@@ -2,6 +2,8 @@
 
 Prosta aplikacja webowa do porównania szacunkowego miesięcznych kosztów energii dla taryf **G12r** i **G11**.
 
+![Zrzut ekranu aplikacji](screen.png)
+
 ## Co robi projekt
 
 - porównuje koszt miesięczny dla G12r i G11,
