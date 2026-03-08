@@ -90,14 +90,6 @@ label{display:block;font-weight:700;margin-top:16px;font-size:18px}
 .tables{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:20px}
 @media(max-width:900px){.tables{grid-template-columns:1fr}}
 .table-wrap{display:flex;flex-direction:column;gap:8px}
-.table-stats{
-  background:#fff;
-  border:1px solid #e0e0e0;
-  border-radius:10px;
-  padding:10px 12px;
-  font-size:14px;
-}
-.table-stats b{color:#222}
 table{
   width:100%;
   border-collapse:collapse;
@@ -111,7 +103,7 @@ th,td{padding:10px 12px;border-bottom:1px solid #e0e0e0}
 td:first-child,th:first-child{text-align:left}
 td{text-align:right}
 tr:nth-child(even){background-color:#fafafa}
-#g12rTable th,#g11Table th{background-color:#607d8b;color:#fff;font-weight:700}
+table th{background-color:#607d8b;color:#fff;font-weight:700}
 .total-row{font-weight:800;color:#fff!important}
 table.cheaper th{background-color:var(--green-light)}
 table.expensive th{background-color:#c62828}
@@ -215,9 +207,6 @@ table.expensive .total-row{background-color:#c62828!important}
         </thead>
         <tbody></tbody>
       </table>
-      <div class="table-stats" id="g12rStats">
-        <b>Średnia cena:</b> -
-      </div>
     </div>
 
     <div class="table-wrap">
@@ -228,9 +217,6 @@ table.expensive .total-row{background-color:#c62828!important}
         </thead>
         <tbody></tbody>
       </table>
-      <div class="table-stats" id="g11Stats">
-        <b>Średnia cena:</b> -
-      </div>
     </div>
   </div>
 
@@ -381,10 +367,6 @@ function compute(){
 
   const avgG12r = total > 0 ? sumG12r / total : 0;
   const avgG11 = total > 0 ? sumG11 / total : 0;
-  document.getElementById('g12rStats').innerHTML =
-    `<b>Średnia cena:</b> ${total > 0 ? money(avgG12r) + ' / kWh' : '-'}`;
-  document.getElementById('g11Stats').innerHTML =
-    `<b>Średnia cena:</b> ${total > 0 ? money(avgG11) + ' / kWh' : '-'}`;
   const g12rTable = document.getElementById('g12rTable');
   const g11Table = document.getElementById('g11Table');
   const g12rTitle = document.getElementById('g12rTitle');
