@@ -746,10 +746,50 @@ function refreshLastUpdated(){
   target.textContent = parsed.toLocaleDateString('pl-PL');
 }
 
+function enableIosSafariAnimationFallback(){
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (prefersReduced) return;
+
+  const ua = navigator.userAgent || '';
+  const isIOS = /iP(hone|ad|od)/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  const isSafari = /Safari/.test(ua) && !/CriOS|FxiOS|EdgiOS|OPiOS/.test(ua);
+  if (!(isIOS && isSafari)) return;
+
+  const sun = document.querySelector('#daySegment .zone-icon svg');
+  const moonIcon = document.querySelector('#nightSegment .zone-icon');
+  const moonShadow = document.querySelector('#nightSegment .moon-shadow');
+  if (!sun || !moonIcon || !moonShadow) return;
+
+  // Disable CSS animations in fallback mode to avoid competing transforms.
+  sun.style.animation = 'none';
+  sun.style.webkitAnimation = 'none';
+  moonIcon.style.animation = 'none';
+  moonIcon.style.webkitAnimation = 'none';
+  moonShadow.style.animation = 'none';
+  moonShadow.style.webkitAnimation = 'none';
+
+  const start = performance.now();
+  const loop = now => {
+    const elapsed = now - start;
+
+    const sunDeg = (elapsed / 12000) * 360;
+    sun.style.transform = `rotate(${sunDeg}deg)`;
+
+    const phase = (elapsed % 5400) / 5400;
+    const wave = Math.sin(phase * Math.PI * 2);
+    moonIcon.style.transform = `translateY(${-1 * wave}px)`;
+    moonShadow.style.transform = `translateX(${6 * wave}px)`;
+
+    requestAnimationFrame(loop);
+  };
+  requestAnimationFrame(loop);
+}
+
 loadInputs();
 compute();
 refreshLastUpdated();
 refreshVisitCounter();
+enableIosSafariAnimationFallback();
 </script>
 </body>
 </html>
