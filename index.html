@@ -52,20 +52,20 @@ h1{color:var(--green);margin:0}
   font-family:'Sora','Manrope','Segoe UI',Arial,sans-serif;
   display:inline-block;
   position:relative;
-  font-size:clamp(24px,2.6vw,36px);
-  letter-spacing:.1px;
+  font-size:clamp(22px,2.4vw,33px);
+  letter-spacing:.25px;
   line-height:1.12;
-  font-weight:850;
-  color:#4a5250;
+  font-weight:600;
+  color:#697270;
   text-wrap:balance;
 }
 .hero-title-energy{
-  color:#4a5250;
+  color:#697270;
 }
 .hero-title-vs{
-  color:#6a7471;
+  color:#8b9491;
   font-size:.68em;
-  font-weight:800;
+  font-weight:600;
   letter-spacing:.06em;
   text-transform:uppercase;
   margin:0 .24em;
@@ -296,6 +296,7 @@ label{display:block;font-weight:700;margin-top:14px;font-size:18px}
 table{
   width:100%;
   border-collapse:collapse;
+  table-layout:auto;
   border-radius:12px;
   overflow:hidden;
   font-size:15px;
@@ -305,6 +306,10 @@ table{
 th,td{padding:10px 12px;border-bottom:1px solid #e0e0e0}
 td:first-child,th:first-child{text-align:left}
 td{text-align:right}
+table th:nth-child(1),table td:nth-child(1){width:58%}
+table th:nth-child(2),table td:nth-child(2){width:14%;white-space:nowrap}
+table th:nth-child(3),table td:nth-child(3){width:12%;white-space:nowrap}
+table th:nth-child(4),table td:nth-child(4){width:16%;white-space:nowrap}
 tr:nth-child(even){background-color:#fafafa}
 table th{background-color:#607d8b;color:#fff;font-weight:700}
 .total-row{font-weight:800;color:#fff!important}
