@@ -2,7 +2,7 @@
 
 Prosta aplikacja webowa do porównania szacunkowego miesięcznych kosztów energii (brutto) dla taryf **G12r** i **G11** na podstawie stawek wpisanych w kodzie.
 
-![Zrzut ekranu aplikacji](screen.png)
+![Aktualny zrzut ekranu aplikacji](./screen.png)
 
 
 ## Co robi projekt
