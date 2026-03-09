@@ -752,8 +752,7 @@ function enableIosSafariAnimationFallback(){
 
   const ua = navigator.userAgent || '';
   const isIOS = /iP(hone|ad|od)/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-  const isSafari = /Safari/.test(ua) && !/CriOS|FxiOS|EdgiOS|OPiOS/.test(ua);
-  if (!(isIOS && isSafari)) return;
+  if (!isIOS) return;
 
   const sun = document.querySelector('#daySegment .zone-icon svg');
   const moonIcon = document.querySelector('#nightSegment .zone-icon');
@@ -773,12 +772,12 @@ function enableIosSafariAnimationFallback(){
     const elapsed = now - start;
 
     const sunDeg = (elapsed / 12000) * 360;
-    sun.style.transform = `rotate(${sunDeg}deg)`;
+    sun.setAttribute('transform', `rotate(${sunDeg} 12 12)`);
 
     const phase = (elapsed % 5400) / 5400;
     const wave = Math.sin(phase * Math.PI * 2);
     moonIcon.style.transform = `translateY(${-1 * wave}px)`;
-    moonShadow.style.transform = `translateX(${6 * wave}px)`;
+    moonShadow.setAttribute('cx', (12 + 6 * wave).toFixed(2));
 
     requestAnimationFrame(loop);
   };
