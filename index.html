@@ -254,6 +254,8 @@ label{display:block;font-weight:700;margin-top:14px;font-size:18px}
 .zone-bar:not(.test) .zone-segment.night .zone-icon{
   width:40px;
   height:40px;
+  animation:moon-wobble 5.4s ease-in-out infinite;
+  -webkit-animation:moon-wobble 5.4s ease-in-out infinite;
 }
 .zone-bar:not(.test) .zone-value{
   z-index:1;
@@ -263,6 +265,7 @@ label{display:block;font-weight:700;margin-top:14px;font-size:18px}
 .zone-bar:not(.test) .zone-segment.day .zone-icon svg{
   transform-origin:center;
   animation:sun-spin 12s linear infinite;
+  -webkit-animation:sun-spin 12s linear infinite;
 }
 .zone-bar:not(.test) .zone-segment.night .zone-icon svg{
   transform-origin:center;
@@ -271,22 +274,46 @@ label{display:block;font-weight:700;margin-top:14px;font-size:18px}
   transform-box:fill-box;
   transform-origin:center;
   animation:moon-mask-slide 5.4s ease-in-out infinite;
+  -webkit-animation:moon-mask-slide 5.4s ease-in-out infinite;
+}
+@-webkit-keyframes sun-spin{
+  from{-webkit-transform:rotate(0deg)}
+  to{-webkit-transform:rotate(360deg)}
 }
 @keyframes sun-spin{
   from{transform:rotate(0deg)}
   to{transform:rotate(360deg)}
+}
+@-webkit-keyframes moon-mask-slide{
+  0%{-webkit-transform:translateX(-6px)}
+  50%{-webkit-transform:translateX(6px)}
+  100%{-webkit-transform:translateX(-6px)}
 }
 @keyframes moon-mask-slide{
   0%{transform:translateX(-6px)}
   50%{transform:translateX(6px)}
   100%{transform:translateX(-6px)}
 }
+@-webkit-keyframes moon-wobble{
+  0%,100%{-webkit-transform:translateY(0)}
+  50%{-webkit-transform:translateY(-1px)}
+}
+@keyframes moon-wobble{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-1px)}
+}
 @media (prefers-reduced-motion: reduce){
   .zone-bar:not(.test) .zone-segment.day .zone-icon svg{
     animation:none;
+    -webkit-animation:none;
+  }
+  .zone-bar:not(.test) .zone-segment.night .zone-icon{
+    animation:none;
+    -webkit-animation:none;
   }
   .zone-bar:not(.test) .zone-segment.night .moon-shadow{
     animation:none;
+    -webkit-animation:none;
     transform:translateX(0);
   }
 }
