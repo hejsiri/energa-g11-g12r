@@ -374,10 +374,10 @@ function renderTable(id, rows){
 }
 
 /* =========================================================
-   STAWKI WG FAKTUR (Twoje screeny) – wszystko w BRUTTO
+   STAWKI WG FAKTUR – wszystko w BRUTTO
    ========================================================= */
 
-/* VAT i akcyza użyte do wyliczeń brutto energii (jak na Twojej fakturze G12r) */
+/* VAT i akcyza użyte do wyliczeń brutto energii zgodnie z fakturą G12r */
 const VAT = 0.23;
 const AKCYZA_MWH_NETTO = 5.0000; // zł/MWh (netto)
 
@@ -520,7 +520,7 @@ function compute(){
 }
 
 /* =========================================================
-   LICZNIK (zostawiam jak było)
+   LICZNIK ODWIEDZIN
    ========================================================= */
 async function refreshVisitCounter(){
   try{
