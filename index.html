@@ -419,7 +419,7 @@ table.expensive .total-row{background-color:#c62828!important}
       <img src="https://upload.wikimedia.org/wikipedia/commons/1/1c/Logo_energa.png" alt="Energa Operator">
     </div>
     <div class="hero-content">
-      <h1>Porównanie cen prądu w taryfach G12r i G11</h1>
+      <h1>Porównanie cen prądu i dystrybucji w taryfach G12r i G11</h1>
     </div>
   </div>
 
@@ -506,7 +506,7 @@ table.expensive .total-row{background-color:#c62828!important}
    POMOCNICZE
    ========================================================= */
 const money = v => v.toFixed(2) + ' zł';
-const rateMoney = v => v.toFixed(4) + ' zł';
+const rateMoney = v => v.toFixed(2) + ' zł';
 const kwhVal = v => Math.round(v) + ' kWh';
 const mwhVal = v => (v / 1000).toFixed(3) + ' MWh';
 const clamp = (v,min,max)=>Math.max(min,Math.min(max,v));
