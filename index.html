@@ -409,11 +409,13 @@ table{
 th,td{padding:10px 12px;border-bottom:1px solid #e0e0e0}
 td:first-child,th:first-child{text-align:left}
 td{text-align:right}
+tbody tr{transition:background-color .18s ease}
 table th:nth-child(1),table td:nth-child(1){width:58%}
 table th:nth-child(2),table td:nth-child(2){width:14%;white-space:nowrap}
 table th:nth-child(3),table td:nth-child(3){width:12%;white-space:nowrap}
 table th:nth-child(4),table td:nth-child(4){width:16%;white-space:nowrap}
 tr:nth-child(even){background-color:#fafafa}
+tbody tr:not(.total-row):hover{background-color:#f1f3f2}
 table th{background-color:#607d8b;color:#fff;font-weight:700}
 .total-row{font-weight:800;color:#fff!important}
 table.cheaper thead tr{background:linear-gradient(135deg,var(--green-light),var(--green))}
@@ -576,6 +578,9 @@ table.expensive .total-row{background:linear-gradient(135deg,#c62828,#b71c1c)!im
 }
 [data-theme="dark"] tr:nth-child(even){
   background-color:#27313d;
+}
+[data-theme="dark"] tbody tr:not(.total-row):hover{
+  background-color:#313d4a;
 }
 [data-theme="dark"] table.cheaper thead tr{
   background:linear-gradient(135deg,#2f7a57,#245f45);
